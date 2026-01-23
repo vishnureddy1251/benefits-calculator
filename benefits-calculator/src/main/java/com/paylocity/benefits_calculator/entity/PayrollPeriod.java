@@ -43,10 +43,11 @@ public class PayrollPeriod extends BaseEntity {
      * @param startDate the start date of the pay period
      * @param endDate the end date of the pay period
      */
+    /**
     public PayrollPeriod(LocalDateTime startDate, LocalDateTime endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
-    }
+    }*/
 
     /**
      * Check if a given date falls within this pay period

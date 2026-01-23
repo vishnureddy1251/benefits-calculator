@@ -36,7 +36,8 @@ public class EmployeePayPeriod extends BaseEntity {
     @Column(name = "total_amount", nullable = false, precision = 19, scale = 2)
     private BigDecimal totalAmount;
 
-    public EmployeePayPeriod(Employee employee, PayrollPeriod payrollPeriod,
+    /**
+     * public EmployeePayPeriod(Employee employee, PayrollPeriod payrollPeriod,
                              BigDecimal baseAmount, BigDecimal benefitsAmount,
                              BigDecimal additionalBenefitCost, BigDecimal totalAmount) {
         this.employee = employee;
@@ -45,7 +46,7 @@ public class EmployeePayPeriod extends BaseEntity {
         this.benefitsAmount = benefitsAmount;
         this.additionalBenefitCost = additionalBenefitCost;
         this.totalAmount = totalAmount;
-    }
+    }*/
 
     public void calculateTotalAmount() {
         this.totalAmount = baseAmount

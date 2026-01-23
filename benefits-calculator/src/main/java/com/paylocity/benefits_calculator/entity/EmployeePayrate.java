@@ -60,6 +60,8 @@ public class EmployeePayrate extends BaseEntity {
      * @param startDate when this salary starts
      * @param endDate when this salary ends
      */
+
+    /**
     public EmployeePayrate(Employee employee, BigDecimal baseSalary,
                            LocalDateTime startDate, LocalDateTime endDate) {
         this.employee = employee;
@@ -67,6 +69,7 @@ public class EmployeePayrate extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+     */
 
     /**
      * Check if this payrate is currently active based on the given date
