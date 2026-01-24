@@ -1,5 +1,6 @@
 package com.paylocity.benefits_calculator.service;
 
+import com.paylocity.benefits_calculator.dto.DependentDto;
 import com.paylocity.benefits_calculator.dto.EmployeeDto;
 import com.paylocity.benefits_calculator.dto.request.CreateEmployeeModel;
 import com.paylocity.benefits_calculator.dto.request.PaginationFilter;
@@ -15,6 +16,8 @@ import java.util.List;
  * - CRUD operations
  * - Pagination support
  * - Business rule validation
+ * - Search functionality
+ * - Dependent management
  *
  * @author Benefits Calculator Team
  * @version 1.0
@@ -30,12 +33,28 @@ public interface EmployeeService {
     EmployeeDto createEmployee(CreateEmployeeModel model);
 
     /**
+     * Create a new employee with dependents
+     *
+     * @param model the employee data including dependents
+     * @return created employee DTO with dependents
+     */
+    EmployeeDto createEmployeeWithDependents(CreateEmployeeModel model);
+
+    /**
      * Get employee by ID
      *
      * @param id the employee ID
      * @return employee DTO
      */
     EmployeeDto getEmployeeById(Long id);
+
+    /**
+     * Get employee by ID with dependents loaded
+     *
+     * @param id the employee ID
+     * @return employee DTO with dependents
+     */
+    EmployeeDto getEmployeeByIdWithDependents(Long id);
 
     /**
      * Get all active employees
@@ -51,6 +70,22 @@ public interface EmployeeService {
      * @return page of employee DTOs
      */
     Page<EmployeeDto> getAllEmployees(PaginationFilter filter);
+
+    /**
+     * Search employees by first name
+     *
+     * @param firstName the first name to search for (case-insensitive)
+     * @return list of matching employees
+     */
+    List<EmployeeDto> searchByFirstName(String firstName);
+
+    /**
+     * Search employees by last name
+     *
+     * @param lastName the last name to search for (case-insensitive)
+     * @return list of matching employees
+     */
+    List<EmployeeDto> searchByLastName(String lastName);
 
     /**
      * Update an existing employee
@@ -81,4 +116,12 @@ public interface EmployeeService {
      * @return count of active employees
      */
     long getEmployeeCount();
+
+    /**
+     * Get all dependents for an employee
+     *
+     * @param employeeId the employee ID
+     * @return list of dependent DTOs
+     */
+    List<DependentDto> getEmployeeDependents(Long employeeId);
 }
