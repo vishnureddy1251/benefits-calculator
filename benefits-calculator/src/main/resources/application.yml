@@ -56,9 +56,9 @@ cors:
 
 app:
   payroll:
-    total-paychecks-per-year: 26
     employee-benefit-cost-monthly: 1000.00
     dependent-benefit-cost-monthly-under-50: 600.00
     dependent-benefit-cost-monthly-over-50: 800.00
     high-salary-threshold: 80000.00
-    high-salary-additional-deduction-percent: 2.0
+    high-salary-additional-percentage: 0.02
+    paychecks-per-year: 26
