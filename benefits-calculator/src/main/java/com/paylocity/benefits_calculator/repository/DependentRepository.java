@@ -18,13 +18,13 @@ public interface DependentRepository extends JpaRepository<Dependent, Long> {
 
     Optional<Dependent> findByIdAndDependentStatus(Long id, DependentStatus status);
 
-    Page<Dependent> findAllByDependentStatus(DependentStatus status, Pageable pageable);
+   /** Page<Dependent> findAllByDependentStatus(DependentStatus status, Pageable pageable);
 
     Page<Dependent> findByEmployee_IdAndDependentStatus(
             Long employeeId,
             DependentStatus status,
             Pageable pageable
-    );
+    ); */
 
     List<Dependent> findByEmployee_IdAndDependentStatus(
             Long employeeId,
@@ -70,7 +70,7 @@ public interface DependentRepository extends JpaRepository<Dependent, Long> {
             @Param("status") DependentStatus status
     );
 
-    boolean existsByIdAndDependentStatus(Long id, DependentStatus status);
+   /** boolean existsByIdAndDependentStatus(Long id, DependentStatus status);
 
     List<Dependent> findByFirstNameContainingIgnoreCaseAndDependentStatus(
             String firstName,
@@ -80,5 +80,34 @@ public interface DependentRepository extends JpaRepository<Dependent, Long> {
     List<Dependent> findByLastNameContainingIgnoreCaseAndDependentStatus(
             String lastName,
             DependentStatus status
+    ); */
+    /**
+     * Find all dependents by status
+     */
+    List<Dependent> findByDependentStatus(DependentStatus status);
+
+    /**
+     * Find all dependents by status with pagination
+     */
+    Page<Dependent> findAllByDependentStatus(DependentStatus status, Pageable pageable);
+
+    /**
+     * Find dependents by employee with pagination
+     */
+    Page<Dependent> findByEmployee_IdAndDependentStatus(
+            Long employeeId,
+            DependentStatus status,
+            Pageable pageable
     );
+
+    /**
+     * Count all dependents by status
+     */
+    long countByDependentStatus(DependentStatus status);
+
+    /**
+     * Check if dependent exists by ID and status
+     */
+    boolean existsByIdAndDependentStatus(Long id, DependentStatus status);
 }
+
