@@ -97,10 +97,10 @@ class DependentServiceTest {
     void testCreateDependent_Success() {
         when(employeeRepository.findByIdAndEmployeeStatus(eq(1L), eq(EmployeeStatus.ACTIVE)))
                 .thenReturn(Optional.of(testEmployee));
-        when(modelMapper.map(any(CreateDependentModel.class), eq(Dependent.class)))
-                .thenReturn(testDependent);
         when(dependentRepository.save(any(Dependent.class)))
                 .thenReturn(testDependent);
+        when(dependentRepository.existsSpouseOrPartnerForEmployee(anyLong(), any(DependentStatus.class)))
+                .thenReturn(false);
         when(modelMapper.map(any(Dependent.class), eq(DependentDto.class)))
                 .thenReturn(dependentDto);
 
@@ -195,8 +195,6 @@ class DependentServiceTest {
 
         when(dependentRepository.findByIdAndDependentStatus(eq(1L), eq(DependentStatus.ACTIVE)))
                 .thenReturn(Optional.of(testDependent));
-        when(employeeRepository.findByIdAndEmployeeStatus(eq(1L), eq(EmployeeStatus.ACTIVE)))
-                .thenReturn(Optional.of(testEmployee));
         when(dependentRepository.save(any(Dependent.class)))
                 .thenReturn(testDependent);
         when(modelMapper.map(any(Dependent.class), eq(DependentDto.class)))
