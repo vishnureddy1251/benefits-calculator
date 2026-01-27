@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  payroll:
+    paychecks-per-year: 26
+    employee-benefit-cost-monthly: 1000.00
+    dependent-benefit-cost-monthly-under-50: 600.00
+    dependent-benefit-cost-monthly-over-50: 800.00
+    high-salary-threshold: 80000.00
+    high-salary-additional-percentage: 0.02
+
+logging:
+  level:
+    org.hibernate: WARN
+    com.paylocity.benefits_calculator: INFO
