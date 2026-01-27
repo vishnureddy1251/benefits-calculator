@@ -27,14 +27,13 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     /**
-     * Find an active employee by ID with dependents and payrates eagerly loaded.
+     * Find an active employee by ID.
+     * Collections are loaded lazily to avoid MultipleBagFetchException.
      *
      * @param id the employee ID
      * @return Optional containing the employee if found and active
      */
     @Query("SELECT e FROM Employee e " +
-            "LEFT JOIN FETCH e.dependents " +
-            "LEFT JOIN FETCH e.employeePayrates " +
             "WHERE e.id = :id AND e.employeeStatus = :status")
     Optional<Employee> findByIdAndEmployeeStatus(
             @Param("id") Long id,
@@ -43,15 +42,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     /**
      * Find all active employees with pagination.
-     * Uses entity graph to avoid N+1 query problem.
+     * Collections are loaded lazily to avoid MultipleBagFetchException.
      *
      * @param status the employee status to filter by
      * @param pageable pagination information
      * @return page of employees
      */
-    @Query("SELECT DISTINCT e FROM Employee e " +
-            "LEFT JOIN FETCH e.dependents " +
-            "LEFT JOIN FETCH e.employeePayrates " +
+    @Query("SELECT e FROM Employee e " +
             "WHERE e.employeeStatus = :status")
     Page<Employee> findAllByEmployeeStatus(
             @Param("status") EmployeeStatus status,
