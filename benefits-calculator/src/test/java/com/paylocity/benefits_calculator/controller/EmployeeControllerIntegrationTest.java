@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.jayway.jsonpath.JsonPath;
 
 /**
  * Integration tests for EmployeeController.
@@ -134,10 +135,11 @@ class EmployeeControllerIntegrationTest {
         String response = mockMvc.perform(post("/api/v1/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(model)))
+                .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
-        // Extract ID from response (simplified - in real test use JsonPath)
-        Long employeeId = 1L; // Assuming first employee gets ID 1
+        // Extract ID from response
+        Long employeeId = JsonPath.parse(response).read("$.data.id", Long.class);
 
         // Act & Assert
         mockMvc.perform(get("/api/v1/employees/{id}", employeeId))
@@ -215,14 +217,17 @@ class EmployeeControllerIntegrationTest {
         createModel.setDateOfBirth(LocalDate.of(1985, 5, 15));
         createModel.setSalary(new BigDecimal("60000.00"));
 
-        mockMvc.perform(post("/api/v1/employees")
+        String createResponse = mockMvc.perform(post("/api/v1/employees")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(createModel)));
+                .content(objectMapper.writeValueAsString(createModel)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
 
-        Long employeeId = 1L; // Assuming first employee
+        Long employeeId = JsonPath.parse(createResponse).read("$.data.id", Long.class);
 
         // Prepare update
         UpdateEmployeeModel updateModel = new UpdateEmployeeModel();
+        updateModel.setId(employeeId);
         updateModel.setFirstName("Updated");
         updateModel.setLastName("Name");
         updateModel.setDateOfBirth(LocalDate.of(1985, 5, 15));
@@ -249,11 +254,13 @@ class EmployeeControllerIntegrationTest {
         model.setDateOfBirth(LocalDate.of(1985, 5, 15));
         model.setSalary(new BigDecimal("50000.00"));
 
-        mockMvc.perform(post("/api/v1/employees")
+        String createResponse = mockMvc.perform(post("/api/v1/employees")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(model)));
+                .content(objectMapper.writeValueAsString(model)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
 
-        Long employeeId = 1L;
+        Long employeeId = JsonPath.parse(createResponse).read("$.data.id", Long.class);
 
         // Act & Assert - Delete
         mockMvc.perform(delete("/api/v1/employees/{id}", employeeId))
