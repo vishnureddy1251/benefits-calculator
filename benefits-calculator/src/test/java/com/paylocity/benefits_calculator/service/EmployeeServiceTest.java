@@ -84,8 +84,6 @@ class EmployeeServiceTest {
     @DisplayName("Should create employee successfully")
     void testCreateEmployee_Success() {
         // Arrange
-        when(modelMapper.map(any(CreateEmployeeModel.class), eq(Employee.class)))
-                .thenReturn(testEmployee);
         when(employeeRepository.save(any(Employee.class)))
                 .thenReturn(testEmployee);
         when(modelMapper.map(any(Employee.class), eq(EmployeeDto.class)))
