@@ -160,8 +160,6 @@ class PayrollServiceTest {
     @Test
     @DisplayName("Should calculate benefit deductions correctly")
     void testCalculateBenefitDeductions() {
-        when(employeeRepository.findByIdAndEmployeeStatus(anyLong(), any(EmployeeStatus.class)))
-                .thenReturn(Optional.of(testEmployee));
         when(dependentRepository.findByEmployee_IdAndDependentStatus(anyLong(), any(DependentStatus.class)))
                 .thenReturn(testDependents);
 
